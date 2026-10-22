@@ -24,7 +24,7 @@ const parseFormatStr = (formatStr) => {
           const val = rest
             .join(':')
             .trim()
-            .replace(/^'+|'+$/g, ''); // trim and replace ''
+            .replace(/^['"]+|['"]+$/g, ''); // trim and strip surrounding '' or ""
 
           const trimmedKey = key.trim();
 
