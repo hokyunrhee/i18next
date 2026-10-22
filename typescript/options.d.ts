@@ -880,6 +880,14 @@ export interface InitOptions<T = object> extends PluginOptions<T> {
   retryTimeout?: number;
 
   /**
+   * Upper bound, in milliseconds, for the wait between retries.
+   * The doubling of `retryTimeout` stops at this value.
+   * Values of 0 or below mean no upper bound.
+   * @default Infinity
+   */
+  maxRetryTimeout?: number;
+
+  /**
    * Initializes the internal formatter for the in-built formats as cached version.
    * Can be set to false for this type of issues: https://github.com/i18next/i18next/issues/2227
    * @default true

@@ -11,6 +11,12 @@ describe('backend', () => {
       .toEqualTypeOf<InitOptions<HttpBackendOptions>>();
   });
 
+  it('accepts the retry options', () => {
+    expectTypeOf<InitOptions['maxRetries']>().toEqualTypeOf<number | undefined>();
+    expectTypeOf<InitOptions['retryTimeout']>().toEqualTypeOf<number | undefined>();
+    expectTypeOf<InitOptions['maxRetryTimeout']>().toEqualTypeOf<number | undefined>();
+  });
+
   it('works with `i18next-fs-backend`', () => {
     expectTypeOf(i18next.use(FsBackend).init<FsBackendOptions>)
       .parameter(0)
