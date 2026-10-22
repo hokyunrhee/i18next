@@ -80,7 +80,7 @@ class Interpolator {
 
     this.nestingOptionsSeparator = nestingOptionsSeparator || ',';
 
-    this.maxReplaces = maxReplaces || 1000;
+    this.maxReplaces = maxReplaces || 500;
 
     this.alwaysFormat = alwaysFormat !== undefined ? alwaysFormat : false;
 
