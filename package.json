@@ -102,6 +102,7 @@
     "test:compatibility": "vitest --project compatibility",
     "test:typescript": "vitest --config vitest.workspace.typescript.mts",
     "test:local": "vitest --config vitest.workspace.local.mts",
+    "test:mutation": "nyorori run --base origin/master",
     "build": "rimraf dist && rollup -c && echo '{\"type\":\"module\"}' > dist/esm/package.json && cpy \"./dist/umd/*.js\" ./",
     "fix_dist_package": "node -e 'console.log(`{\"type\":\"module\",\"version\":\"${process.env.npm_package_version}\"}`)' > dist/esm/package.json",
     "preversion": "npm run test && npm run build && git push",

@@ -32,8 +32,9 @@ class EventEmitter {
 
   once(event, listener) {
     const wrapper = (...args) => {
-      listener(...args);
+      // detach first, so a listener that emits the same event is not called again
       this.off(event, wrapper);
+      listener(...args);
     };
     this.on(event, wrapper);
     return this;

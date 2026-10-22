@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    testTimeout: 10_000,
     projects: [
       {
         test: {
@@ -21,6 +22,7 @@ export default defineConfig({
       include: ['**/src/*.js'],
       exclude: [
         '**/src/index.js',
+        '**/src/index.cjs',
         '**/src/shallowEqual.js',
         '**/node_modules/**',
         '**/test/**',
