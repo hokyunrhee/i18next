@@ -26,6 +26,10 @@ class Connector extends EventEmitter {
 
     this.maxRetries = options.maxRetries >= 0 ? options.maxRetries : 5;
     this.retryTimeout = options.retryTimeout >= 1 ? options.retryTimeout : 350;
+    if (this.maxRetries > 20)
+      this.logger.warn(
+        `maxRetries is ${this.maxRetries}; with exponential backoff the last retry waits a very long time`,
+      );
 
     this.state = {};
     this.queue = [];
@@ -224,6 +228,8 @@ class Connector extends EventEmitter {
       if (err) this.logger.warn(`${prefix}loading namespace ${ns} for language ${lng} failed`, err);
       if (!err && data)
         this.logger.log(`${prefix}loaded namespace ${ns} for language ${lng}`, data);
+      if (!err && data && Object.keys(data).length === 0)
+        this.logger.warn(`${prefix}namespace ${ns} for language ${lng} loaded but is empty`);
 
       this.loaded(name, err, data);
     });
