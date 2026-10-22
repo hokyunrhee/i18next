@@ -57,6 +57,12 @@ describe('utils', () => {
       expect(value).toEqual(1);
     });
 
+    it('finds no value when the path is not a string', () => {
+      const obj = { a: { b: { c: 1 } }, undefined: 'x' };
+      expect(deepFind(obj, undefined)).toEqual(undefined);
+      expect(deepFind(obj, ['a', 'b'])).toEqual(undefined);
+    });
+
     it('finds no value for a non-existent path', () => {
       const obj = { a: { b: { c: 1 } } };
       const value = deepFind(obj, 'a.b.d');

@@ -215,6 +215,7 @@ export const looksLikeObjectPath = (key, nsSeparator, keySeparator) => {
  */
 export const deepFind = (obj, path, keySeparator = '.') => {
   if (!obj) return undefined;
+  if (typeof path !== 'string') return undefined;
   if (obj[path]) {
     if (!Object.prototype.hasOwnProperty.call(obj, path)) return undefined;
     return obj[path];
