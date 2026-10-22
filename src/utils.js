@@ -228,16 +228,13 @@ export const deepFind = (obj, path, keySeparator = '.') => {
     let next;
     let nextPath = '';
     for (let j = i; j < tokens.length; ++j) {
-      if (j !== i) {
-        nextPath += keySeparator;
-      }
-      nextPath += tokens[j];
+      nextPath = j !== i ? nextPath + keySeparator + tokens[j] : tokens[j];
       next = current[nextPath];
       if (next !== undefined) {
         if (['string', 'number', 'boolean'].includes(typeof next) && j < tokens.length - 1) {
           continue;
         }
-        i += j - i + 1;
+        i = j + 1;
         break;
       }
     }
