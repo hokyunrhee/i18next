@@ -103,6 +103,11 @@ class Formatter {
         const formatter = new Intl.ListFormat(lng, { ...opt });
         return (val) => formatter.format(val);
       }),
+      truncate: (val, lng, opt) => {
+        const max = opt.maxLength ?? 20;
+        if (typeof val !== 'string' || val.length <= max) return val;
+        return `${val.slice(0, Math.max(max - 1, 0))}…`;
+      },
     };
   }
 
