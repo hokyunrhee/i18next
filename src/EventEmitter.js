@@ -12,6 +12,7 @@ class EventEmitter {
   }
 
   on(events, listener) {
+    if (typeof listener !== 'function') return this;
     events.split(' ').forEach((event) => {
       if (!this.observers[event]) this.observers[event] = new Map();
       const numListeners = this.observers[event].get(listener) || 0;
