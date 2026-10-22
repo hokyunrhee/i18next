@@ -26,6 +26,8 @@ class Connector extends EventEmitter {
 
     this.maxRetries = options.maxRetries >= 0 ? options.maxRetries : 5;
     this.retryTimeout = options.retryTimeout >= 1 ? options.retryTimeout : 350;
+    // upper bound for the exponential backoff between retries
+    this.maxRetryTimeout = options.maxRetryTimeout > 0 ? options.maxRetryTimeout : Infinity;
 
     this.state = {};
     this.queue = [];
@@ -157,9 +159,12 @@ class Connector extends EventEmitter {
         this.read(next.lng, next.ns, next.fcName, next.tried, next.wait, next.callback);
       }
       if (err && data /* = retryFlag */ && tried < this.maxRetries) {
-        setTimeout(() => {
-          this.read(lng, ns, fcName, tried + 1, wait * 2, callback);
-        }, wait);
+        setTimeout(
+          () => {
+            this.read(lng, ns, fcName, tried + 1, wait * 2, callback);
+          },
+          Math.min(wait, this.maxRetryTimeout),
+        );
         return;
       }
       callback(err, data);
