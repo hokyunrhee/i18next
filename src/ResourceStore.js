@@ -21,6 +21,26 @@ class ResourceStore extends EventEmitter {
     }
   }
 
+  static fromJSON(data, options) {
+    return new ResourceStore(JSON.parse(JSON.stringify(data)), options);
+  }
+
+  get languages() {
+    return Object.keys(this.data);
+  }
+
+  get defaultNamespace() {
+    return this.options.defaultNS;
+  }
+
+  set defaultNamespace(ns) {
+    this.options.defaultNS = ns;
+  }
+
+  getNamespaces(lng) {
+    return Object.keys(this.getDataByLanguage(lng) || {});
+  }
+
   addNamespaces(ns) {
     if (!this.options.ns.includes(ns)) {
       this.options.ns.push(ns);
