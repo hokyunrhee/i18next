@@ -75,7 +75,7 @@ export const get = () => ({
     // nestingPrefixEscaped: '$t(',
     // nestingSuffixEscaped: ')',
     // defaultVariables: undefined // object that can have values to interpolate on - extends passed in interpolation data
-    maxReplaces: 1000, // max replaces to prevent endless loop
+    maxReplaces: 500, // max replaces to prevent endless loop
     skipOnVariables: true,
   },
   cacheInBuiltFormats: true,
