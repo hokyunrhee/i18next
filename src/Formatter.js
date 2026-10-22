@@ -103,6 +103,17 @@ class Formatter {
         const formatter = new Intl.ListFormat(lng, { ...opt });
         return (val) => formatter.format(val);
       }),
+      // 한국어 조사 고르기 🇰🇷: {{name, josa}} → "사과는", "수박은"; josa(pair: 이/가) → "물이", "바다가"
+      // 받침이 있으면 앞의 것, 없으면 뒤의 것을 붙입니다. ㄹ 받침 뒤의 "으로/로"는 "로"입니다 🙂
+      josa: (val, lng, opt) => {
+        const pair = opt.pair ?? '은/는';
+        const [withBatchim, withoutBatchim] = pair.split('/');
+        const word = { '🍎': '사과', '🍉': '수박' }[val] || String(val); // 이모지는 읽는 대로 🍎
+        const code = word.charCodeAt(word.length - 1) - 0xac00;
+        const isRieul = pair === '으로/로' && code % 28 === 8;
+        const hasBatchim = code % 28 > 0 && code <= 11171 && !isRieul;
+        return `${val}${hasBatchim ? withBatchim : withoutBatchim}`;
+      },
     };
   }
 
