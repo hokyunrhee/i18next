@@ -145,11 +145,14 @@ class Formatter {
             ...valOptions,
           });
         } catch (error) {
-          this.logger.warn(error);
+          this.logger.warn(`formatter "${formatName}" threw for value ${mem}`, error);
         }
         return formatted;
       } else {
-        this.logger.warn(`there was no format function for ${formatName}`);
+        this.logger.warn(
+          `there was no format function for ${formatName}`,
+          Object.keys(this.formats),
+        );
       }
       return mem;
     }, value);

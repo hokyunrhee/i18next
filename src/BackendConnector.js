@@ -197,6 +197,10 @@ class Connector extends EventEmitter {
     if (isString(namespaces)) namespaces = [namespaces];
 
     const toLoad = this.queueLoad(languages, namespaces, options, callback);
+    this.logger.log(
+      `queued ${toLoad.toLoad.length} of ${toLoad.toLoad.length + toLoad.pending.length} namespace loads`,
+      toLoad.toLoad,
+    );
     if (!toLoad.toLoad.length) {
       if (!toLoad.pending.length) callback(); // nothing to load and no pendings...callback now
       return null; // pendings will trigger callback
@@ -221,7 +225,7 @@ class Connector extends EventEmitter {
     const ns = s[1];
 
     this.read(lng, ns, 'read', undefined, undefined, (err, data) => {
-      if (err) this.logger.warn(`${prefix}loading namespace ${ns} for language ${lng} failed`, err);
+      if (err) this.logger.warn(`${prefix}failed loading namespace ${ns} for language ${lng}`, err);
       if (!err && data)
         this.logger.log(`${prefix}loaded namespace ${ns} for language ${lng}`, data);
 

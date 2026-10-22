@@ -222,7 +222,9 @@ class Interpolator {
             value = match[0];
             continue; // this makes sure it continues to detect others
           } else {
-            this.logger.warn(`missed to pass in variable ${matchedVar} for interpolating ${str}`);
+            this.logger.warn(
+              `missed to pass in variable ${matchedVar} for interpolating ${str.length > 80 ? `${str.slice(0, 80)}…` : str}`,
+            );
             value = '';
           }
         } else if (!isString(value) && !this.useRawValueToEscape) {
