@@ -149,7 +149,7 @@ class LanguageUtil {
       if (fallbackCode === undefined) fallbackCacheKey = 'undefined';
       else if (fallbackCode === false) fallbackCacheKey = 'boolean:false';
       else fallbackCacheKey = `string:${fallbackCode}`;
-      cacheKey = `${code.length}:${code}|${fallbackCacheKey}`;
+      cacheKey = code.length + ':' + code + '|' + fallbackCacheKey;
     }
     if (cacheKey !== null) {
       const cached = this.resolveHierarchyCache[cacheKey];
