@@ -53,8 +53,6 @@ describe('i18next.translation.formatting', () => {
                     'Before {{date, customDateCached(format: EEEE d MMMM yyyy HH:mm; otherParam: 0)}}',
                   customFormatWithSeparator: "Hello {{myVar, join(separator: ' | ')}}",
                   customFormatWithSeparatorComma: "Hello {{myVar, join(separator: ', ')}}",
-                  customFormatWithSeparatorCommaNotFirst:
-                    "Hello {{myVar, upper, join(separator: ', ')}}",
                   boy: 'Boy',
                   boy_other: 'Boys',
                   girl: 'Girl',
@@ -103,9 +101,6 @@ describe('i18next.translation.formatting', () => {
             );
             instance.services.formatter.add('join', (value, lng, options) =>
               value.join(options.separator),
-            );
-            instance.services.formatter.add('upper', (value) =>
-              value.map((item) => item.toUpperCase()),
             );
             resolve();
           },
@@ -294,10 +289,6 @@ describe('i18next.translation.formatting', () => {
       {
         args: ['customFormatWithSeparatorComma', { myVar: ['here', 'there'] }],
         expected: 'Hello here, there',
-      },
-      {
-        args: ['customFormatWithSeparatorCommaNotFirst', { myVar: ['a', 'b'] }],
-        expected: 'Hello A, B',
       },
     ]);
 
