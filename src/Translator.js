@@ -299,7 +299,7 @@ class Translator extends EventEmitter {
             lngs.push(fallbackLngs[i]);
           }
         } else if (this.options.saveMissingTo === 'all') {
-          lngs = this.languageUtils.toResolveHierarchy(opt.lng || this.language);
+          lngs = this.languageUtils.toResolveHierarchy(opt.lng || this.language, opt.fallbackLng);
         } else {
           lngs.push(opt.lng || this.language);
         }
@@ -374,7 +374,11 @@ class Translator extends EventEmitter {
     if (this.i18nFormat?.parse) {
       res = this.i18nFormat.parse(
         res,
-        { ...this.options.interpolation.defaultVariables, ...opt },
+        {
+          ...this.options.interpolation.defaultVariables,
+          ...opt.replace,
+          ...opt,
+        },
         opt.lng || this.language || resolved.usedLng,
         resolved.usedNS,
         resolved.usedKey,
