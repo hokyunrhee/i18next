@@ -27,6 +27,19 @@ describe('i18next', () => {
       expect(disabledHandler).not.toHaveBeenCalled();
     });
 
+    it('calls a once listener only once, even if it emits the same event', () => {
+      const calls = [];
+      emitter.once('ping', (n) => {
+        calls.push(n);
+        emitter.emit('ping', n + 1);
+      });
+
+      emitter.emit('ping', 1);
+      emitter.emit('ping', 10);
+
+      expect(calls).toEqual([1]);
+    });
+
     it('should emit twice if a handler was attached twice', () => {
       const calls = [];
       const listener = (payload) => {
